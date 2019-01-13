@@ -8,7 +8,7 @@
 
     <style rel="stylesheet">
 
-        #shadow{
+        #shadow {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
@@ -38,7 +38,7 @@
             outline: 0;
         }
 
-        .image-check-checked-xray{
+        .image-check-checked-xray {
             background-color: #ea615a;
             border-radius: 15px;
         }
@@ -61,11 +61,9 @@
             display: none;
         }
 
-
         .image-check_prosthesis input[type="checkbox"] {
             display: none;
         }
-
 
         .ullist {
             display: table;
@@ -232,9 +230,13 @@
                 <ul class="nav nav-tabs" id="demoTabs">
                     <li class=""><a data-toggle="tab" href="#tab-1" style="background-color: #ee7558;color: #000;"><i
                                     class="fa fa-history"></i>{{trans('file.past_history')}}</a></li>
-                  <li class="active"><a data-toggle="tab" id="test" href="#tab-3" style="background-color: #73eee4;color: #000;"><i
+                    <li class="active"><a data-toggle="tab" id="test" href="#tab-3"
+                                          style="background-color: #73eee4;color: #000;"><i
                                     class="fa fa-clock-o"></i>{{ trans('file.prosthesis_treatment') }}</a></li>
-                    <li class=""><a data-toggle="tab" id="test" href="#tab-4" style="background-color: #63ee75;color: #000;"><img src="{{ asset('img/xray.png') }}" width="15px"/>&nbsp;{{ trans('file.xray') }}</a></li>
+                    <li class=""><a data-toggle="tab" id="test" href="#tab-4"
+                                    style="background-color: #63ee75;color: #000;"><img
+                                    src="{{ asset('img/xray.png') }}" width="15px"/>&nbsp;{{ trans('file.xray') }}</a>
+                    </li>
                 </ul>
                 <div class="tab-content">
 
@@ -245,63 +247,70 @@
                             @foreach($patient_in_treatment->treatment->sortByDesc('id') as $treats)
                                 @if($treats->type_treatment == 'Prosthesis Treatment')
 
-                                {{-- start for each here --}}
-                                <div class="col-lg-12" id="shadow" style="margin-bottom: 10px;">
-                                    <div class="ibox float-e-margins">
-                                        <div class="ibox-title">
-                                            <h5><span class="text-navy">{{ $treats->type_treatment }}</span>   </h5>
-                                            <div class="ibox-tools">
-                                                <a class="collapse-link">
-                                                    <i class="fa fa-chevron-up" style="color: red; font-size: 20px"></i>
-                                                </a>
+                                    {{-- start for each here --}}
+                                    <div class="col-lg-12" id="shadow" style="margin-bottom: 10px;">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-title">
+                                                <h5><span class="text-navy">{{ $treats->type_treatment }}</span></h5>
+                                                <div class="ibox-tools">
+                                                    <a class="collapse-link">
+                                                        <i class="fa fa-chevron-up"
+                                                           style="color: red; font-size: 20px"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="ibox-tools" style="margin-right:50px;">
+                                                    <form action="/xray" method="post">
+                                                        <input type="hidden" name="tooth_number"
+                                                               value="{{ $treats->teeth_number }}"/>
+                                                        <input type="hidden" name="patient_id"
+                                                               value="{{ $patient_in_treatment->id }}"/>
+                                                        <input type="hidden" name="patient_name"
+                                                               value="{{ $patient_in_treatment->name }}"/>
+                                                        <input type="hidden" name="xray_status" value="not"/>
+                                                        <input type="hidden" name="doctor_name"
+                                                               value="{{ $patient_in_treatment->doctor->first_name }}"/>
+                                                        <a class="btn btn-md btn-success pull-right demo_xray"
+                                                           type="submit"
+                                                           style="margin-left: 15px;"><img
+                                                                    src="{{ asset('img/xray.png') }}"
+                                                                    width="20px"/> &nbsp;Take X-Ray Again</a>
+                                                    </form>
+                                                </div>
+                                                <div class="ibox-tools">
+                                                    <a class="btn btn-md btn-info pull-right"
+                                                       href="/operation/{{ $treats->id }}/edit"
+                                                       style="margin-left: 15px;"><i
+                                                                class="fa fa-edit pull-left"
+                                                                style="font-size: 20px"></i>{{ trans('file.edit') }}</a>
+                                                </div>
+                                                <div class="ibox-tools">
+                                                    <form action="/operation/{{ $treats->id }}" method="POST">
+                                                        @method('delete')
+                                                        <a class="btn btn-md btn-danger pull-right demo3" type="submit"><i
+                                                                    class="fa fa-trash pull-left"
+                                                                    style="font-size: 20px"></i>{{ trans('file.delete') }}
+                                                        </a>
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <div class="ibox-tools" style="margin-right:50px;">
-                                                <form action="/xray" method="post">
-                                                    <input type="hidden" name="tooth_number"
-                                                           value="{{ $treats->teeth_number }}"/>
-                                                    <input type="hidden" name="patient_id"
-                                                           value="{{ $patient_in_treatment->id }}"/>
-                                                    <input type="hidden" name="patient_name"
-                                                           value="{{ $patient_in_treatment->name }}"/>
-                                                    <input type="hidden" name="xray_status" value="not"/>
-                                                    <input type="hidden" name="doctor_name"
-                                                           value="{{ $patient_in_treatment->doctor->first_name }}"/>
-                                                    <a class="btn btn-md btn-success pull-right demo_xray" type="submit"
-                                                       style="margin-left: 15px;"><img src="{{ asset('img/xray.png') }}"
-                                                                                       width="20px"/> &nbsp;Take X-Ray Again</a>
-                                                </form>
-                                            </div>
-                                            <div class="ibox-tools">
-                                                <a class="btn btn-md btn-info pull-right"
-                                                   href="/operation/{{ $treats->id }}/edit" style="margin-left: 15px;"><i
-                                                            class="fa fa-edit pull-left"
-                                                            style="font-size: 20px"></i>{{ trans('file.edit') }}</a>
-                                            </div>
-                                            <div class="ibox-tools">
-                                                <form action="/operation/{{ $treats->id }}" method="POST">
-                                                    @method('delete')
-                                                    <a class="btn btn-md btn-danger pull-right demo3" type="submit"><i
-                                                                class="fa fa-trash pull-left"
-                                                                style="font-size: 20px"></i>{{ trans('file.delete') }}</a>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="ibox-content" id="divone" style="display: none">
+                                            <div class="ibox-content" id="divone" style="display: none">
 
-                                            <div class="row" style="margin-top: -20px;">
-                                                @if($treats->paid_amount == 0)
-                                                    <div class="col-xs-12 alert alert-danger">
-                                                        <h4 style="color: #850f36">This patient has not paid the treatment
-                                                            fee</h4>
-                                                    </div>
-                                                @endif
-                                            </div>
+                                                <div class="row" style="margin-top: -20px;">
+                                                    @if($treats->paid_amount == 0)
+                                                        <div class="col-xs-12 alert alert-danger">
+                                                            <h4 style="color: #850f36">This patient has not paid the
+                                                                treatment
+                                                                fee</h4>
+                                                        </div>
+                                                    @endif
+                                                </div>
 
 
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="table-responsive" id="divToReload">
                                                             <table class="table table-striped table-bordered table-hover"
+                                                                   id="mytable"
                                                                    style="margin-left:30px;width:95%;">
                                                                 <thead>
                                                                 <th>{{trans('file.id')}}</th>
@@ -321,9 +330,11 @@
                                                                         <td>{{$te->shade}}</td>
                                                                         <td>{{$te->type_cover}}</td>
                                                                         <td>
-                                                                            <form action="/treatment/{{ $te->id }}" method="post">
+                                                                            <form action="/treatment/{{ $te->id }}"
+                                                                                  method="post">
                                                                                 @method('delete')
-                                                                                <button class="btn btn-xs btn-danger demo3" type="submit"><i
+                                                                                <button class="btn btn-xs btn-danger demo3"
+                                                                                        type="submit"><i
                                                                                             class="fa fa-remove"></i>&nbsp;Delete
                                                                                 </button>
                                                                             </form>
@@ -339,59 +350,62 @@
                                                 </div>
 
 
-                                            <div class="row " style="margin-top:15px;margin-right:10px;margin-left:10px;">
-                                                <div class="col-md-8">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped " style="font-weight: bold; ">
-                                                            <tr>
-                                                                <td>{{trans('file.paid')}} :</td>
-                                                                <td>{{$treats->paid_amount}}</td>
-                                                                <td>{{trans('file.treatment_cost')}}:</td>
-                                                                <td>{{ $treats->estimated_fee }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Have Xray :</td>
-                                                                @if($treats->have_xray == '0')
-                                                                    <td><label>No</label></td>
-                                                                @else
-                                                                    <td><label>Yes</label></td>
-                                                                @endif
+                                                <div class="row "
+                                                     style="margin-top:15px;margin-right:10px;margin-left:10px;">
+                                                    <div class="col-md-8">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped "
+                                                                   style="font-weight: bold; ">
+                                                                <tr>
+                                                                    <td>{{trans('file.paid')}} :</td>
+                                                                    <td>{{$treats->paid_amount}}</td>
+                                                                    <td>{{trans('file.treatment_cost')}}:</td>
+                                                                    <td>{{ $treats->estimated_fee }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Have Xray :</td>
+                                                                    @if($treats->have_xray == '0')
+                                                                        <td><label>No</label></td>
+                                                                    @else
+                                                                        <td><label>Yes</label></td>
+                                                                    @endif
 
-                                                                <td>{{trans('file.remaining')}} :</td>
-                                                                <td>{{$treats->remaining_fee}}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{trans('file.date')}} :</td>
-                                                                <td>{{ $treats->created_at }}</td>
-                                                                <td> {{trans('file.treatment')}}</td>
-                                                                @if($treats->status_visits == 'complete')
-                                                                    <td><label class="label-success"
-                                                                               style="padding: 3px">{{ $treats->status_visits }}</label>
-                                                                    </td>
-                                                                @else
-                                                                    <td><label class="label-warning"
-                                                                               style="padding: 3px">{{ $treats->status_visits }}</label>
-                                                                    </td>
-                                                                @endif
+                                                                    <td>{{trans('file.remaining')}} :</td>
+                                                                    <td>{{$treats->remaining_fee}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>{{trans('file.date')}} :</td>
+                                                                    <td>{{ $treats->created_at }}</td>
+                                                                    <td> {{trans('file.treatment')}}</td>
+                                                                    @if($treats->status_visits == 'complete')
+                                                                        <td><label class="label-success"
+                                                                                   style="padding: 3px">{{ $treats->status_visits }}</label>
+                                                                        </td>
+                                                                    @else
+                                                                        <td><label class="label-warning"
+                                                                                   style="padding: 3px">{{ $treats->status_visits }}</label>
+                                                                        </td>
+                                                                    @endif
 
-                                                            </tr>
-                                                            <tr>
-                                                                <td><strong>{{trans('file.description')}}:</strong></td>
-                                                                <td colspan="3">{{ $treats->description }}</td>
-                                                            </tr>
-                                                        </table>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>{{trans('file.description')}}:</strong>
+                                                                    </td>
+                                                                    <td colspan="3">{{ $treats->description }}</td>
+                                                                </tr>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
 
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <hr/>
 
-                                                </div>
                                             </div>
-                                            <hr/>
-
                                         </div>
                                     </div>
-                                </div>
                                 @endif
                             @endforeach
                         </div>
@@ -743,8 +757,7 @@
                                 </div>
                             </div>
                             <br/>
-                            @foreach($patient_in_treatment->treatment->sortByDesc('id') as $treats)
-                            @if($treats->type_treatment == 'Prosthesis Treatment')
+
 
                             <div class="table-responsive" id="divToReload">
                                 <table class="table table-striped table-bordered table-hover" id="mytableProsthesis"
@@ -759,30 +772,39 @@
                                     </thead>
                                     <tbody>
                                     <?php $i = 1;?>
-                                    @foreach($teeth_pros as $te)
-                                        <tr>
-                                            <td>{{ $i }}</td>
-                                            <td>{{ $te->tooth_number }}</td>
-                                            <td>{{ $te->type_prosthesis }}</td>
-                                            <td>{{ $te->shade }}</td>
-                                            <td>{{ $te->type_cover }}</td>
-                                            <td>
-                                                <form action="/treatment/{{ $te->id }}" method="post" id="formDeleteTeeth_prosthesis">
-                                                    @method('delete')
-                                                    <button class="btn btn-xs btn-danger delete_teeth_prosthesis" type="submit" data-id="{{ $te->id }}" id="{{ $te->id }}"><i
-                                                                class="fa fa-remove"></i>&nbsp;Delete
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        <?php $i++;?>
+                                    @foreach($patient_in_treatment->treatment->sortByDesc('id') as $treats)
+                                        @if($treats->type_treatment == 'Prosthesis Treatment')
+                                            @foreach($teeth_pros as $te)
+
+                                                <tr>
+                                                    <td>{{ $i }}</td>
+                                                    <td>{{ $te->tooth_number }}</td>
+                                                    <td>{{ $te->type_prosthesis }}</td>
+                                                    <td>{{ $te->shade }}</td>
+                                                    <td>{{ $te->type_cover }}</td>
+                                                    <td>
+                                                        <form action="/prosthesis_treatment/{{ $te->id }}" method="post"
+                                                              id="formDeleteTeeth_prosthesis">
+                                                            @method('delete')
+                                                            <button class="btn btn-xs btn-danger delete_teeth_prosthesis"
+                                                                    type="submit" data-id="{{ $te->id }}"
+                                                                    id="{{ $te->id }}"><i
+                                                                        class="fa fa-remove"></i>&nbsp;Delete
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                <?php $i++;?>
+                                            @endforeach
+
+                                        @endif
                                     @endforeach
                                     </tbody>
                                 </table>
                                 {{ $teeth->links() }}
                             </div>
-                            @endif
-                            @endforeach
+                            {{--@endif--}}
+                            {{--@endforeach--}}
 
 
                             <form id="form" action="/operation" method="POST">
@@ -1197,7 +1219,8 @@
                                     <div class="col-md-6">
 
                                         <input type="text" name="doctor_name"
-                                               value="{{ $patient_in_treatment->doctor->first_name }}" style="visibility: hidden;">
+                                               value="{{ $patient_in_treatment->doctor->first_name }}"
+                                               style="visibility: hidden;">
 
                                         <input type="text" name="patient_name" value="{{ $patient_in_treatment->name }}"
                                                style="visibility: hidden;">
@@ -1207,7 +1230,8 @@
 
                                         <input type="hidden" value="not" id="tooth" hidden name="xray_status"/>
 
-                                        <input type="hidden" class="form-control" value="" id="tooth_number_3" name="tooth_number"
+                                        <input type="hidden" class="form-control" value="" id="tooth_number_3"
+                                               name="tooth_number"
                                                required>
 
                                     </div>
@@ -1278,7 +1302,7 @@
         <div class="modal inmodal" id="prosthesis_treatment" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content animated fadeIn">
-                    <form id="myform_prosth" action="/treatment" method="post" name="myform_prosth">
+                    <form id="myform_prosth" action="/prosthesis_treatment" method="post" name="myform_prosth">
 
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span
@@ -1318,7 +1342,7 @@
                             <div class="form-group">
                                 <label>Select shade teeth</label>
                                 <select class="form-control" name="shade" required>
-                                    <option disabled
+                                    <option
                                             selected>Select shade
                                     </option>
                                     @foreach($teethShades as $teethshade)
@@ -1331,7 +1355,7 @@
                                 <label>Select Cover :</label>
                                 <select class="form-control" name="type_cover"
                                         onchange="getFeeTreatment(this);" required>
-                                    <option disabled selected>Select Cover</option>
+                                    <option selected>Select Cover</option>
                                     @foreach($teethTypeCovers as $cover)
                                         <option value="{{ $cover->type }}"
                                                 id="{{ $cover->price }}">
@@ -1369,18 +1393,18 @@
 
             <script>
                 $(document).ready(function () {
-                    $('#myform').on('submit', function (e) {
+                    $('#myform_prosth').on('submit', function (e) {
                         e.preventDefault();
                         $.ajax({
                             url: $(this).attr('action') || window.location.pathname,
                             type: "POST",
                             data: $(this).serialize(),
-                            dataType:"json",
+                            dataType: "json",
                             success: function (data) {
                                 $("#form_output").html(data);
-                                $("#mytable").append("<tr><td>"+data.id+"</td><td>"+data.tooth_number+"</td><td>"+data.treatment+"</td><td>"+data.dentaldefect+"</td><td>" +
-                                    "<form action='/treatment/"+data.id+"'  method='post'>" +
-                                    "<input type='hidden' name='_method' value='delete' /> "+
+                                $("#mytableProsthesis").append("<tr><td>" + data.id + "</td><td>" + data.tooth_number + "</td><td>" + data.shade + "</td><td>" + data.type_prosthesis + "</td><td>" + data.type_cover + "</td><td>" +
+                                    "<form action='/prosthesis_treatment/" + data.id + "'  method='post'>" +
+                                    "<input type='hidden' name='_method' value='delete' /> " +
                                     "<button class='btn btn-xs btn-danger' type='submit'><i class='fa fa-remove'></i>&nbsp;Delete</button>" +
                                     "</form></td></tr>");
                             },
@@ -1391,43 +1415,21 @@
                     });
                 });
 
-                $(document).ready(function () {
-                    $('#myform_prosth').on('submit', function (e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: $(this).attr('action') || window.location.pathname,
-                            type: "POST",
-                            data: $(this).serialize(),
-                            dataType:"json",
-                            success: function (data) {
-                                $("#form_output").html(data);
-                                $("#mytableProsthesis").append("<tr><td>"+data.id+"</td><td>"+data.tooth_number+"</td><td>"+data.type_prosthesis+"</td><td>"+data.shade+"</td><td>"+data.type_cover+"</td><td>" +
-                                    "<form action='/treatment/"+data.id+"'  method='post' id='formDeleteTeeth'>" +
-                                    "<input type='hidden' name='_method' value='delete' /> "+
-                                    "<button class='btn btn-xs btn-danger delete_teeth' type='submit' data-id='"+data.id+"'><i class='fa fa-remove'></i>&nbsp;Delete</button>" +
-                                    "</form></td></tr>");
-                            },
-                            error: function (jXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
-                            }
-                        });
-                    });
-                });
 
-                $('.delete_teeth').on('click', function(e) {
+                $('.delete_teeth').on('click', function (e) {
                     var inputData = $('#formDeleteTeeth').serialize();
 
                     var dataId = $(this).attr('data-id');
                     var el = this;
                     $.ajax({
-                        url: '{{ url('/treatment') }}' + '/' + dataId,
+                        url: '{{ url('/prosthesis_treatment') }}' + '/' + dataId,
                         type: 'POST',
                         data: inputData,
-                        success: function( data ) {
+                        success: function (data) {
                             $(el).closest("tr").remove();
                         },
-                        error: function( data ) {
-                            if ( data.status === 422 ) {
+                        error: function (data) {
+                            if (data.status === 422) {
                                 toastr.error('Cannot delete the category');
                             }
                         }
@@ -1436,7 +1438,7 @@
                     return false;
                 });
 
-                $('.delete_teeth_prosthesis').on('click', function(e) {
+                $('.delete_teeth_prosthesis').on('click', function (e) {
                     var inputData = $('#formDeleteTeeth_prosthesis').serialize();
 
                     var dataId = $(this).attr('data-id');
@@ -1445,11 +1447,11 @@
                         url: '{{ url('/treatment') }}' + '/' + dataId,
                         type: 'POST',
                         data: inputData,
-                        success: function( data ) {
+                        success: function (data) {
                             $(el).closest("tr").remove();
                         },
-                        error: function( data ) {
-                            if ( data.status === 422 ) {
+                        error: function (data) {
+                            if (data.status === 422) {
                                 toastr.error('Cannot delete the category');
                             }
                         }
@@ -1502,7 +1504,7 @@
 
                 $(".image-check").on("click", function (e) {
                     $(this).toggleClass('image-check-checked');
-                    var $checkbox = $(this).find('input[type="checkbox"]').attr('checked','checked');
+                    var $checkbox = $(this).find('input[type="checkbox"]').attr('checked', 'checked');
                     tooth_num = $checkbox.val();
                     $('.modal-body #tooth_number').val(tooth_num);
                     $('#general_treatment').modal('show');
@@ -1511,11 +1513,10 @@
 
                 $(".image-check-xray").on("click", function (e) {
                     $(this).toggleClass('image-check-checked-xray');
-                    var $checkbox = $(this).find('input[type="checkbox"]').attr('checked','checked');
+                    var $checkbox = $(this).find('input[type="checkbox"]').attr('checked', 'checked');
                     tooth_num = $checkbox.val();
                     e.preventDefault();
                 });
-
 
 
                 $("#refresh-btn").on("click", function (e) {
@@ -1527,7 +1528,7 @@
                 //                Image check box for prosthesis
                 $(".image-check_prosthesis").on("click", function (e) {
                     $(this).toggleClass('image-check-checked');
-                    var $checkbox = $(this).find('input[type="checkbox"]').attr('checked','checked');
+                    var $checkbox = $(this).find('input[type="checkbox"]').attr('checked', 'checked');
                     tooth_num = $checkbox.val();
                     $('.modal-body #tooth_number').val(tooth_num);
                     $('#prosthesis_treatment').modal('show');
@@ -1555,13 +1556,11 @@
                 });
 
 
-
                 $('#xray_form').submit(function (e) {
                     e.preventDefault();
                     $('#xray').modal('toggle'); //or  $('#IDModal').modal('hide');
                     return false;
                 });
-
 
 
                 $('#myform_prosth').submit(function (e) {

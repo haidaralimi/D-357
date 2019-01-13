@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\TeethCoverType;
-use App\Treatment;
-use GuzzleHttp\Psr7\Response;
+use App\ProsthesisTeeth;
 use Illuminate\Http\Request;
-use App\Teeth;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Psr7\Response;
 
-class TeethController extends Controller
+class ProsthesisTeethController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,39 +33,31 @@ class TeethController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        try {
-            $teeth = new Teeth();
-            $nextId = DB::table('treatments')->max('id') + 1;
-            $teeth->tooth_number = $request->tooth_number;
-            $teeth->treatment = $request->treatment;
-            $teeth->dentaldefect = $request->dentaldefect;
-            $teeth->treatment_id = $nextId;
-            $teeth->patient_id = $request->patient_id;
-            //==================================================
-            $teeth->save();
-            return json_encode($teeth);
+        $teeth = new ProsthesisTeeth();
+        $nextId = DB::table('treatments')->max('id') + 1;
+        $teeth->tooth_number = $request->tooth_number;
 
-        }
-        catch (\Exception $e) {
-            if ($e->getCode() == '42S22') {
-                $column_not_found = 'column not found';
-                return view('errors_page', compact('column_not_found'));
-            }
-        }
-
+        $teeth->treatment_id = $nextId;
+        $teeth->patient_id = $request->patient_id;
+        //==================================================
+        $teeth->type_prosthesis = $request->type_prosthesis;
+        $teeth->shade = $request->shade;
+        $teeth->type_cover = $request->type_cover;
+        $teeth->save();
+        return json_encode($teeth);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\ProsthesisTeeth  $prosthesisTeeth
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ProsthesisTeeth $prosthesisTeeth)
     {
         //
     }
@@ -75,10 +65,10 @@ class TeethController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\ProsthesisTeeth  $prosthesisTeeth
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProsthesisTeeth $prosthesisTeeth)
     {
         //
     }
@@ -87,10 +77,10 @@ class TeethController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\ProsthesisTeeth  $prosthesisTeeth
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ProsthesisTeeth $prosthesisTeeth)
     {
         //
     }
@@ -98,12 +88,12 @@ class TeethController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\ProsthesisTeeth  $prosthesisTeeth
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $teeth = Teeth::find($id);
+        $teeth = ProsthesisTeeth::find($id);
         $teeth->delete();
         return redirect()->back();
     }

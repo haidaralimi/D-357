@@ -33,6 +33,9 @@ class Treatment extends Model implements Auditable
     public function teeth(){
         return $this->hasMany(Teeth::class,'treatment_id','id');
     }
+    public function prosthesisteeth(){
+        return $this->hasMany(ProsthesisTeeth::class,'treatment_id','id');
+    }
     public  function orthodensy(){
         return $this->hasMany(Orthodensy::class,'treatment_id','id');
 

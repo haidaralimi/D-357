@@ -1383,28 +1383,7 @@
                     });
                 });
 
-                $(document).ready(function () {
-                    $('#myform_prosth').on('submit', function (e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: $(this).attr('action') || window.location.pathname,
-                            type: "POST",
-                            data: $(this).serialize(),
-                            dataType:"json",
-                            success: function (data) {
-                                $("#form_output").html(data);
-                                $("#mytableProsthesis").append("<tr><td>"+data.id+"</td><td>"+data.tooth_number+"</td><td>"+data.type_prosthesis+"</td><td>"+data.shade+"</td><td>"+data.type_cover+"</td><td>" +
-                                    "<form action='/treatment/"+data.id+"'  method='post' id='formDeleteTeeth'>" +
-                                    "<input type='hidden' name='_method' value='delete' /> "+
-                                    "<button class='btn btn-xs btn-danger delete_teeth' type='submit' data-id='"+data.id+"'><i class='fa fa-remove'></i>&nbsp;Delete</button>" +
-                                    "</form></td></tr>");
-                            },
-                            error: function (jXHR, textStatus, errorThrown) {
-                                alert(errorThrown);
-                            }
-                        });
-                    });
-                });
+
 
                 $('.delete_teeth').on('click', function(e) {
                     var inputData = $('#formDeleteTeeth').serialize();

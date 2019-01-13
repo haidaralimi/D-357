@@ -8,6 +8,7 @@ use App\Income;
 use App\Medicine;
 use App\Patient;
 use App\Prescription;
+use App\ProsthesisTeeth;
 use App\Teeth;
 use App\TeethCoverType;
 use App\TeethShade;
@@ -74,16 +75,16 @@ class TreatmentController extends Controller
         $patient_id = $patient_in_treatment->id;
 
 
-        $teeth = Teeth::where('patient_id','=',$id)->paginate(10);
+        $teeth = ProsthesisTeeth::where('patient_id','=',$id)->paginate(10);
         $tee=   DB::table('teeths')->select('tooth_number')->where('patient_id','=',$id)->distinct()->get();
 
         $nextId = DB::table('treatments')->max('id') + 1;
 
 //              return table general treatment
-        $teeth = Teeth::where('patient_id','=',$id)->where('treatment_id','=',$nextId)->where('type_cover','=',null)->paginate(32);
+        $teeth = Teeth::where('patient_id','=',$id)->where('treatment_id','=',$nextId)->paginate(32);
 
 //                return table prosthesis treatment
-        $teeth_pros = Teeth::where('patient_id','=',$id)->where('treatment','=',null)->paginate(32);
+        $teeth_pros = ProsthesisTeeth::where('patient_id','=',$id)->paginate(32);
 
 
 //                return $last_treatment;
@@ -146,7 +147,7 @@ class TreatmentController extends Controller
                 $nextId = DB::table('treatments')->max('id') + 1;
 
 //              return table general treatment
-                $teeth = Teeth::where('patient_id','=',$id)->where('treatment_id','=',$nextId)->where('type_cover','=',null)->paginate(32);
+                $teeth = Teeth::where('patient_id','=',$id)->where('treatment_id','=',$nextId)->paginate(32);
 
 //                return table prosthesis treatment
                 $teeth_pros = Teeth::where('patient_id','=',$id)->where('treatment','=',null)->paginate(32);
@@ -209,6 +210,8 @@ class TreatmentController extends Controller
                 $treatment->have_xray = 'no';
 
             }
+            $treatment->save();
+            return back();
         }
         catch (\Exception $e) {
             if ($e->getCode() == '42S22'){
