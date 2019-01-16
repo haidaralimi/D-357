@@ -54,12 +54,12 @@
                 <h5>{{trans('file.epinfo')}}&nbsp;<i class="fa fa-info"></i></h5>
             </div>
             <div class="ibox-content" id="divone">
-                <a class="btn btn-primary" href="{{ URL::previous() }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a>
+                <a class="btn btn-primary" href="/prosthesis/create/{{$patient_in_treatment->id}}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a>
                 <br/>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h4 class="text-center">Teeth number with position : [ {{ $treatment->teeth_number }} ]</h4>
+                        <h4 class="text-center">Teeth number with position : [ @foreach($tee as $t) {{$t->tooth_number }} , @endforeach ]</h4>
                         <div class="container-fluid">
 
                             <div class="row" style="margin-left:-50px;">
@@ -67,139 +67,139 @@
                                     <ul class="ullist">
 
 
-                                                <li>
-                                                    <label class="image-check"
-                                                           @foreach($tee as $t)
-                                                           @if($t->tooth_number == '8 Upper Left')
-                                                           style="background-color:#ea615a;border-radius:15px;"
-                                                            @endif
-                                                            @endforeach
-                                                        >
-                                                        <img class="img-responsive"
-                                                             src="{{ asset('img/tooths/8.png') }}" width="100%"
-                                                             height="auto"
-                                                             style="border-bottom: 1px"/>
-                                                        <input type="checkbox" name="teeth_number[]"
-                                                               value="8 Upper Left"
-                                                           />
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </li>
+                                        <li>
+                                            <label class="image-check"
+                                                   @foreach($tee as $t)
+                                                   @if($t->tooth_number == '8 Upper Left')
+                                                   style="background-color:#ea615a;border-radius:15px;"
+                                                    @endif
+                                                    @endforeach
+                                            >
+                                                <img class="img-responsive"
+                                                     src="{{ asset('img/tooths/8.png') }}" width="100%"
+                                                     height="auto"
+                                                     style="border-bottom: 1px"/>
+                                                <input type="checkbox" name="teeth_number[]"
+                                                       value="8 Upper Left"
+                                                />
+                                                <i class="fa fa-check hidden"></i>
+                                            </label>
+                                        </li>
 
-                                                <li>
-                                                    <label class="image-check"
-                                                           @foreach($tee as $t)
-                                                           @if($t->tooth_number == '7 Upper Left')
-                                                           style="background-color:#ea615a;border-radius:15px;"
-                                                            @endif
-                                                            @endforeach
-                                                           >
-                                                        <img class="img-responsive"
-                                                             src="{{ asset('img/tooths/7.png') }}" width="100%"
-                                                             height="auto"/>
-                                                        <input type="checkbox" name="teeth_number[]"
-                                                               value="7 Upper Left"/>
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </li>
+                                        <li>
+                                            <label class="image-check"
+                                                   @foreach($tee as $t)
+                                                   @if($t->tooth_number == '7 Upper Left')
+                                                   style="background-color:#ea615a;border-radius:15px;"
+                                                    @endif
+                                                    @endforeach
+                                            >
+                                                <img class="img-responsive"
+                                                     src="{{ asset('img/tooths/7.png') }}" width="100%"
+                                                     height="auto"/>
+                                                <input type="checkbox" name="teeth_number[]"
+                                                       value="7 Upper Left"/>
+                                                <i class="fa fa-check hidden"></i>
+                                            </label>
+                                        </li>
 
-                                                <li>
-                                                    <label class="image-check"
-                                                           @foreach($tee as $t)
-                                                           @if($t->tooth_number == '6 Upper Left')
-                                                           style="background-color:#ea615a;border-radius:15px;"
-                                                            @endif
-                                                            @endforeach
-                                                    >
-                                                        <img class="img-responsive"
-                                                             src="{{ asset('img/tooths/6.png') }}" width="100%"
-                                                             height="auto"/>
-                                                        <input type="checkbox" name="teeth_number[]"
-                                                               value="6 Upper left"/>
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </li>
+                                        <li>
+                                            <label class="image-check"
+                                                   @foreach($tee as $t)
+                                                   @if($t->tooth_number == '6 Upper Left')
+                                                   style="background-color:#ea615a;border-radius:15px;"
+                                                    @endif
+                                                    @endforeach
+                                            >
+                                                <img class="img-responsive"
+                                                     src="{{ asset('img/tooths/6.png') }}" width="100%"
+                                                     height="auto"/>
+                                                <input type="checkbox" name="teeth_number[]"
+                                                       value="6 Upper left"/>
+                                                <i class="fa fa-check hidden"></i>
+                                            </label>
+                                        </li>
 
-                                                <li>
-                                                    <label class="image-check"
-                                                           @foreach($tee as $t)
-                                                           @if($t->tooth_number == '5 Upper Left')
-                                                           style="background-color:#ea615a;border-radius:15px;"
-                                                            @endif
-                                                            @endforeach
-                                                    >
-                                                        <img class="img-responsive"
-                                                             src="{{ asset('img/tooths/5.png') }}" width="100%"
-                                                             height="auto"/>
-                                                        <input type="checkbox" name="teeth_number[]"
-                                                               value="5 Upper Left"/>
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label class="image-check"
-                                                           @foreach($tee as $t)
-                                                           @if($t->tooth_number == '4 Upper Left')
-                                                           style="background-color:#ea615a;border-radius:15px;"
-                                                            @endif
-                                                            @endforeach
-                                                    >
-                                                        <img class="img-responsive"
-                                                             src="{{ asset('img/tooths/4.png') }}" width="100%"
-                                                             height="auto"/>
-                                                        <input type="checkbox" name="teeth_number[]"
-                                                               value="4 Upper Left"/>
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label class="image-check"
-                                                           @foreach($tee as $t)
-                                                           @if($t->tooth_number == '3 Upper Left')
-                                                           style="background-color:#ea615a;border-radius:15px;"
-                                                            @endif
-                                                            @endforeach
-                                                    >
-                                                        <img class="img-responsive"
-                                                             src="{{ asset('img/tooths/3.png') }}" width="100%"
-                                                             height="auto"/>
-                                                        <input type="checkbox" name="teeth_number[]"
-                                                               value="3 Upper Left"/>
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label class="image-check"
-                                                           @foreach($tee as $t)
-                                                           @if($t->tooth_number == '2 Upper Left')
-                                                           style="background-color:#ea615a;border-radius:15px;"
-                                                            @endif
-                                                            @endforeach
-                                                    >
-                                                        <img class="img-responsive"
-                                                             src="{{ asset('img/tooths/2.png') }}" width="100%"
-                                                             height="auto"/>
-                                                        <input type="checkbox" name="teeth_number[]"
-                                                               value="2 Upper Left"/>
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label class="image-check"
-                                                           @foreach($tee as $t)
-                                                           @if($t->tooth_number == '1 Upper Left')
-                                                           style="background-color:#ea615a;border-radius:15px;"
-                                                            @endif
-                                                            @endforeach
-                                                    >
-                                                        <img class="img-responsive"
-                                                             src="{{ asset('img/tooths/1.png') }}" width="100%"
-                                                             height="auto"/>
-                                                        <input type="checkbox" name="teeth_number[]"
-                                                               value="1 Upper Left"/>
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </li>
+                                        <li>
+                                            <label class="image-check"
+                                                   @foreach($tee as $t)
+                                                   @if($t->tooth_number == '5 Upper Left')
+                                                   style="background-color:#ea615a;border-radius:15px;"
+                                                    @endif
+                                                    @endforeach
+                                            >
+                                                <img class="img-responsive"
+                                                     src="{{ asset('img/tooths/5.png') }}" width="100%"
+                                                     height="auto"/>
+                                                <input type="checkbox" name="teeth_number[]"
+                                                       value="5 Upper Left"/>
+                                                <i class="fa fa-check hidden"></i>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="image-check"
+                                                   @foreach($tee as $t)
+                                                   @if($t->tooth_number == '4 Upper Left')
+                                                   style="background-color:#ea615a;border-radius:15px;"
+                                                    @endif
+                                                    @endforeach
+                                            >
+                                                <img class="img-responsive"
+                                                     src="{{ asset('img/tooths/4.png') }}" width="100%"
+                                                     height="auto"/>
+                                                <input type="checkbox" name="teeth_number[]"
+                                                       value="4 Upper Left"/>
+                                                <i class="fa fa-check hidden"></i>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="image-check"
+                                                   @foreach($tee as $t)
+                                                   @if($t->tooth_number == '3 Upper Left')
+                                                   style="background-color:#ea615a;border-radius:15px;"
+                                                    @endif
+                                                    @endforeach
+                                            >
+                                                <img class="img-responsive"
+                                                     src="{{ asset('img/tooths/3.png') }}" width="100%"
+                                                     height="auto"/>
+                                                <input type="checkbox" name="teeth_number[]"
+                                                       value="3 Upper Left"/>
+                                                <i class="fa fa-check hidden"></i>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="image-check"
+                                                   @foreach($tee as $t)
+                                                   @if($t->tooth_number == '2 Upper Left')
+                                                   style="background-color:#ea615a;border-radius:15px;"
+                                                    @endif
+                                                    @endforeach
+                                            >
+                                                <img class="img-responsive"
+                                                     src="{{ asset('img/tooths/2.png') }}" width="100%"
+                                                     height="auto"/>
+                                                <input type="checkbox" name="teeth_number[]"
+                                                       value="2 Upper Left"/>
+                                                <i class="fa fa-check hidden"></i>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="image-check"
+                                                   @foreach($tee as $t)
+                                                   @if($t->tooth_number == '1 Upper Left')
+                                                   style="background-color:#ea615a;border-radius:15px;"
+                                                    @endif
+                                                    @endforeach
+                                            >
+                                                <img class="img-responsive"
+                                                     src="{{ asset('img/tooths/1.png') }}" width="100%"
+                                                     height="auto"/>
+                                                <input type="checkbox" name="teeth_number[]"
+                                                       value="1 Upper Left"/>
+                                                <i class="fa fa-check hidden"></i>
+                                            </label>
+                                        </li>
 
                                     </ul>
                                 </div>
@@ -609,6 +609,7 @@
                         <div class="row">
                             <div class="col-md-6 col-xs-12">
                                 <h2>{{ $treatment->type_treatment }}</h2>
+                                <input type="hidden" value="{{$treatment->type_treatment}}" name="treatment_type">
                                 <input name="id" value="{{ $treatment->id }}" type="hidden"
                                        class="form-control required">
 
@@ -684,15 +685,15 @@
         <div class="modal-dialog">
             <div class="modal-content animated fadeIn">
 
-                <form @foreach($teeth as $tr) action="/treatment/{{$tr->id}} @endforeach
-                      " method="post">
+                <form @foreach($teeth as $tr) action="/prosthesis_treatment/{{$tr->id}} @endforeach
+                        " method="post">
                     {{method_field('PATCH')}}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span
                                     aria-hidden="true">&times;</span><span
                                     class="sr-only">{{trans('file.close')}}</span></button>
                         <i class="fa fa-edit modal-icon text-primary"></i>
-                        <h4 class="modal-title">General Treatment</h4>
+                        <h4 class="modal-title">Prosthesis Treatment</h4>
                     </div>
                     <div class="modal-body">
                         <input name="treatment_id" value="{{$treatment->id }}" type="hidden">
@@ -703,35 +704,53 @@
                         <div class="form-group">
                             <label>Tooth number</label>
                             @foreach($tee as $t)
-                            <input type="text" value="{{$t->tooth_number}}" id="tooth_number" name="tooth_number" class="form-control"/>
+                                <input type="text" value="{{$t->tooth_number}}" id="tooth_number" name="tooth_number" class="form-control"/>
                             @endforeach
                         </div>
 
                         <div class="form-group">
-                            <label>Dental Defect *</label>
-                            <select class="form-control" name="dentaldefect" id="dentaldefect" required>
-                                <option disabled
-                                        selected>{{trans('file.select_dental_defect')}}</option>
-                                @foreach($dentalDefectList as $list)
-                                    <option value="{{ $list->dental_defect }}">{{ $list->dental_defect }}</option>
+                            <label>Type Of Prosthesis *</label>
+                            <ul class="prothisis">
+                                <li>
+                                    <div class="i-checks"><label>Static &nbsp;<input type="radio"
+                                                                                     name="type_prosthesis"
+                                                                                     value="static"
+                                                                                     checked/></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="i-checks"><label>Dynamic &nbsp;<input type="radio"
+                                                                                      name="type_prosthesis"
+                                                                                      value="dynamic"/></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select shade teeth</label>
+                            <select class="form-control" name="shade" required>
+                                <option
+                                        selected>Select shade
+                                </option>
+                                @foreach($teethShadeList as $teethshade)
+                                    <option value="{{ $teethshade->shade }}">{{ $teethshade->shade }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label>{{trans('file.treatment')}} :</label>
-                            <select class="form-control" name="treatment" required id="treatment-select"
-                                    onchange="getcolor(this)">
-                                <option disabled>{{trans('file.treatment')}}</option>
-                                @foreach($treatementList as $listTreatement)
-                                    <option style="color: #{{ $listTreatement->color }}; font-weight: bold"
-                                            value="{{ $listTreatement->treatment }}"
-                                            id="{{ $listTreatement->color }}">
-                                        {{ $listTreatement->treatment }} </option>
+                            <label>Select Cover :</label>
+                            <select class="form-control" name="type_cover"
+                                    onchange="getFeeTreatment(this);" required>
+                                <option selected>Select Cover</option>
+                                @foreach($teethCoverList as $cover)
+                                    <option value="{{ $cover->type }}"
+                                            id="{{ $cover->price }}">
+                                        {{ $cover->type }} </option>
                                 @endforeach
                             </select>
                         </div>
-
 
                         <br>
 

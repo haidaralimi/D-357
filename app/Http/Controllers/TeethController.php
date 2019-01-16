@@ -92,7 +92,14 @@ class TeethController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $teeth = Teeth::find($id);
+        $teeth->tooth_number = $request->tooth_number;
+        $teeth->treatment = $request->treatment;
+        $teeth->dentaldefect = $request->dentaldefect;
+        $teeth->treatment_id = $request->treatment_id;
+        //==================================================
+        $teeth->update();
+        return back();
     }
 
     /**

@@ -349,15 +349,10 @@
                                                                 <td>{{ $treats->estimated_fee }}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Have Xray :</td>
-                                                                @if($treats->have_xray == '0')
-                                                                    <td><label>No</label></td>
-                                                                @else
-                                                                    <td><label>Yes</label></td>
-                                                                @endif
-
                                                                 <td>{{trans('file.remaining')}} :</td>
                                                                 <td>{{$treats->remaining_fee}}</td>
+                                                                <td>{{trans('file.discount')}}</td>
+                                                                <td>{{$treats->discount}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>{{trans('file.date')}} :</td>
@@ -1407,27 +1402,7 @@
                     return false;
                 });
 
-                $('.delete_teeth_prosthesis').on('click', function(e) {
-                    var inputData = $('#formDeleteTeeth_prosthesis').serialize();
 
-                    var dataId = $(this).attr('data-id');
-                    var el = this;
-                    $.ajax({
-                        url: '{{ url('/treatment') }}' + '/' + dataId,
-                        type: 'POST',
-                        data: inputData,
-                        success: function( data ) {
-                            $(el).closest("tr").remove();
-                        },
-                        error: function( data ) {
-                            if ( data.status === 422 ) {
-                                toastr.error('Cannot delete the category');
-                            }
-                        }
-                    });
-
-                    return false;
-                });
             </script>
 
             <script>

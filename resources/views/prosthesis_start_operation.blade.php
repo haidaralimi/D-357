@@ -151,8 +151,25 @@
 
 @endsection
 @section('content')
+    <div class="row">
 
-    @include('part.nav_doctor')
+        <ul class="ullist-nav">
+            <li>
+                <div class="col-sm-3 col-xs-5">
+                    <h1 class="title-button"><a class="btn btn-primary hvr-grow-shadow" style="font-size: 18px; width: 200px;"
+                                                href="/prosthesis"><img src="{{ asset('img/patient_list.png') }}" class="pull-left title-button" width="40px"/>&nbsp;&nbsp;{{trans('file.patient_list')}}</a>
+                    </h1>
+                </div>
+            </li>
+            <li>
+                <div class="col-sm-3 col-xs-5">
+                    <h1><a class="btn btn-primary hvr-grow-shadow" style="font-size: 18px; width: 250px;"
+                           href="/next_appointment_list"><img src="{{ asset('img/patient_appointment.png') }}" class="pull-left" width="40px"/>&nbsp;&nbsp;{{trans('file.next_appointment_list')}}</a></h1>
+                </div>
+            </li>
+        </ul>
+    </div>
+
 
     <br/>
     {{--personal information patient--}}
@@ -278,7 +295,7 @@
                                                 </div>
                                                 <div class="ibox-tools">
                                                     <a class="btn btn-md btn-info pull-right"
-                                                       href="/operation/{{ $treats->id }}/edit"
+                                                       href="/prosthesis_treatment/{{ $treats->id }}/edit"
                                                        style="margin-left: 15px;"><i
                                                                 class="fa fa-edit pull-left"
                                                                 style="font-size: 20px"></i>{{ trans('file.edit') }}</a>
@@ -304,7 +321,7 @@
                                                         </div>
                                                     @endif
                                                 </div>
-
+                                                @if($treats->type_treatment == 'Prosthesis Treatment')
 
                                                 <div class="row">
                                                     <div class="col-md-12">
@@ -322,7 +339,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                 <?php $i = 1;?>
-                                                                @foreach($treats->teeth as $te)
+                                                                @foreach($treats->prosthesisteeth as $te)
                                                                     <tr>
                                                                         <td>{{ $i }}</td>
                                                                         <td>{{$te->tooth_number}}</td>
@@ -330,7 +347,7 @@
                                                                         <td>{{$te->shade}}</td>
                                                                         <td>{{$te->type_cover}}</td>
                                                                         <td>
-                                                                            <form action="/treatment/{{ $te->id }}"
+                                                                            <form action="/prosthesis_treatment/{{ $te->id }}"
                                                                                   method="post">
                                                                                 @method('delete')
                                                                                 <button class="btn btn-xs btn-danger demo3"
@@ -348,7 +365,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                @endif
 
                                                 <div class="row "
                                                      style="margin-top:15px;margin-right:10px;margin-left:10px;">
@@ -363,15 +380,11 @@
                                                                     <td>{{ $treats->estimated_fee }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Have Xray :</td>
-                                                                    @if($treats->have_xray == '0')
-                                                                        <td><label>No</label></td>
-                                                                    @else
-                                                                        <td><label>Yes</label></td>
-                                                                    @endif
 
                                                                     <td>{{trans('file.remaining')}} :</td>
                                                                     <td>{{$treats->remaining_fee}}</td>
+                                                                    <td>{{trans('file.discount')}}</td>
+                                                                    <td>{{$treats->discount}}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>{{trans('file.date')}} :</td>
@@ -772,8 +785,8 @@
                                     </thead>
                                     <tbody>
                                     <?php $i = 1;?>
-                                    @foreach($patient_in_treatment->treatment->sortByDesc('id') as $treats)
-                                        @if($treats->type_treatment == 'Prosthesis Treatment')
+                                    {{--@foreach($patient_in_treatment->treatment->sortByDesc('id') as $treats)--}}
+                                        {{--@if($treats->type_treatment == 'Prosthesis Treatment')--}}
                                             @foreach($teeth_pros as $te)
 
                                                 <tr>
@@ -797,8 +810,8 @@
                                                 <?php $i++;?>
                                             @endforeach
 
-                                        @endif
-                                    @endforeach
+                                        {{--@endif--}}
+                                    {{--@endforeach--}}
                                     </tbody>
                                 </table>
                                 {{ $teeth->links() }}
@@ -1402,7 +1415,7 @@
                             dataType: "json",
                             success: function (data) {
                                 $("#form_output").html(data);
-                                $("#mytableProsthesis").append("<tr><td>" + data.id + "</td><td>" + data.tooth_number + "</td><td>" + data.shade + "</td><td>" + data.type_prosthesis + "</td><td>" + data.type_cover + "</td><td>" +
+                                $("#mytableProsthesis").append("<tr><td>" + data.id + "</td><td>" + data.tooth_number + "</td><td>" + data.type_prosthesis + "</td><td>" + data.shade + "</td><td>" + data.type_cover + "</td><td>" +
                                     "<form action='/prosthesis_treatment/" + data.id + "'  method='post'>" +
                                     "<input type='hidden' name='_method' value='delete' /> " +
                                     "<button class='btn btn-xs btn-danger' type='submit'><i class='fa fa-remove'></i>&nbsp;Delete</button>" +
@@ -1416,27 +1429,6 @@
                 });
 
 
-                $('.delete_teeth').on('click', function (e) {
-                    var inputData = $('#formDeleteTeeth').serialize();
-
-                    var dataId = $(this).attr('data-id');
-                    var el = this;
-                    $.ajax({
-                        url: '{{ url('/prosthesis_treatment') }}' + '/' + dataId,
-                        type: 'POST',
-                        data: inputData,
-                        success: function (data) {
-                            $(el).closest("tr").remove();
-                        },
-                        error: function (data) {
-                            if (data.status === 422) {
-                                toastr.error('Cannot delete the category');
-                            }
-                        }
-                    });
-
-                    return false;
-                });
 
                 $('.delete_teeth_prosthesis').on('click', function (e) {
                     var inputData = $('#formDeleteTeeth_prosthesis').serialize();
@@ -1444,7 +1436,7 @@
                     var dataId = $(this).attr('data-id');
                     var el = this;
                     $.ajax({
-                        url: '{{ url('/treatment') }}' + '/' + dataId,
+                        url: '{{ url('/prosthesis_treatment') }}' + '/' + dataId,
                         type: 'POST',
                         data: inputData,
                         success: function (data) {
@@ -1577,19 +1569,6 @@
                     }
                     e.preventDefault();
                 });
-
-                //                $(document).on("click", ".delete_teeth" , function() {
-                //                    var delete_id = $(this).data('id');
-                //                    var el = this;
-                //                    $.ajax({
-                //                        url: '/treatment/'+delete_id,
-                //                        type: 'POST',
-                //                        success: function(response){
-                ////
-                //                            alert(response);
-                //                        }
-                //                    });
-                //                });
 
 
                 $(document).on("click", "#xray_btn", function () {

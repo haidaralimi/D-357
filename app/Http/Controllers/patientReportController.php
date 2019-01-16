@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Income;
+use App\ProsthesisTeeth;
 use App\Teeth;
 use App\Treatment;
 use App\TreatmentList;
@@ -61,7 +62,7 @@ class patientReportController extends Controller
 
 
         $patient_income_general_teeth = Teeth::where('patient_id','=',$id)->where('treatment','!=','')->get();
-        $patient_income_general_prost = Teeth::where('patient_id','=',$id)->where('shade','!=','')->get();
+        $patient_income_general_prost = ProsthesisTeeth::where('patient_id','=',$id)->where('shade','!=','')->get();
 
         $patient_income_prosthesis = Treatment::where('patient_id','=',$id)
                                 ->Where('type_treatment','=','Prosthesis Treatment')->get();
@@ -80,14 +81,26 @@ class patientReportController extends Controller
 
     public function search_patient(Request $request)
     {
-        $query = $request->search;
-        $data = DB::table('patients')->where('id_patient','like','%'.$query.'%')
-            ->orWhere('name','like','%'.$query.'%')
-            ->orWhere('lastname','like','%'.$query.'%')
-            ->orWhere('phone','like','%'.$query.'%')->get();
+        if (isset($request->date)){
+            $query = $request->date;
+            $data = DB::table('patients')->where('id_patient', 'like', '%' . $query . '%')
+                ->orWhere('name', 'like', '%' . $query . '%')
+                ->orWhere('lastname', 'like', '%' . $query . '%')
+                ->orWhere('phone', 'like', '%' . $query . '%')
+                ->orWhere('next_appointment', 'li   ke', '%' . $query . '%')->get();
+              return view('patient.patient_report_search', compact('data'));
 
-        return view('patient.patient_report_search', compact('data'));
+        }
+        else {
 
+            $query = $request->search;
+            $data = DB::table('patients')->where('id_patient', 'like', '%' . $query . '%')
+                ->orWhere('name', 'like', '%' . $query . '%')
+                ->orWhere('lastname', 'like', '%' . $query . '%')
+                ->orWhere('phone', 'like', '%' . $query . '%')->get();
+
+            return view('patient.patient_report_search', compact('data'));
+        }
     }
 
     /*

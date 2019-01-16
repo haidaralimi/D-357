@@ -71,9 +71,12 @@
 
             <div class="ibox-content">
                 <div class="row">
+                    <a href="/orthodensy" class="btn btn-primary"
+                       style="margin-left: 30px;">{{trans('file.back')}}</a>
+                    <br>
+                    <br>
                     <a href="/create_orthodensy/{{$patient_in_treatment->id}}" class="btn btn-primary"
                        style="margin-left: 30px;">Add New Treatment</a>
-                    <br>
                     <br>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="mytable"

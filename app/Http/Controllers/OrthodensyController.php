@@ -45,6 +45,7 @@ class OrthodensyController extends Controller
         return view('create_orthodensy_patient',compact('patient'));
     }
     public function add_orthodensy_image($id){
+            $patient = Patient::find($id);
             $treatment_id = Treatment::find($id);
             $orthodensy = Orthodensy::where('treatment_id','=',$id)->get();
             return view('add_orthodensy_image',compact('treatment_id','orthodensy'));

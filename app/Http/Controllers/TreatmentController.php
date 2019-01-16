@@ -271,15 +271,19 @@ class TreatmentController extends Controller
     public function edit($id)
     {
         $treatment = Treatment::find($id);
+        $patien = Treatment::find($id)->patient;
+
+
         $treatementList = TreatmentList::all();
         $dentalDefectList = DentalDefectList::all();
         $teethShadeList = TeethShade::all();
         $teethCoverList = TeethCoverType::all();
-        $teeth = Teeth::where('patient_id','=',$id)->paginate(10);
-        $tee =   DB::table('teeths')->select('tooth_number')->where('patient_id','=',$id)->distinct()->get();
-        $patient_in_treatment = Patient::find($id);
+        $teeth = Teeth::where('treatment_id','=',$id)->get();
+        $tee =   DB::table('teeths')->select('tooth_number')->where('patient_id','=',$patien->id)->where('treatment_id',$id)->distinct()->get();
+
+        $patient_in_treatment = Patient::find($patien->id);
         return view('treatment_operation_edit',compact('treatment','treatementList','dentalDefectList',
-            'teethCoverList','teethShadeList','teeth','tee','patient_in_treatment'));
+            'teethCoverList','teethShadeList','teeth','tee','patient_in_treatment','patien'));
 
     }
 
@@ -313,6 +317,7 @@ class TreatmentController extends Controller
         $treatementList = TreatmentList::all();
         $dentalDefectList = DentalDefectList::all();
         $patient_id = $patient_in_treatment->id;
+
         return view('treatment_operation_edit', compact('patient_in_treatment',
             'treatementList', 'patient_id', 'checkValue', 'dentalDefectList', 'last_treatment'));
     }
@@ -331,18 +336,18 @@ class TreatmentController extends Controller
         $treatment->description = $request->description;
         $treatment->estimated_fee = $request->estimated_fee;
         $treatment->discount = $request->discount;
-//        if($request->dentaldefect == null)
-//        {
-//            $treatment->dentaldefect = 'Prosthesis';
-//            $treatment->treatment = 'Prosthesis';
-//        }else{
-//            $treatment->treatment = $request->input('treatment');
-//            $treatment->dentaldefect = $request->input('dentaldefect');
-//        }
-        $treatment->status_visits = $request->status_visits;
+        $treatment->remaining_fee = $treatment->estimated_fee - $treatment->discount;
 
+        $treatment->status_visits = $request->status_visits;
         $treatment->update();
-        return redirect('/operation');
+        if ($request->treatment_type == 'Prosthesis Treatment'){
+            return redirect('/prosthesis');
+        }
+        else{
+            return redirect('/operation');
+        }
+
+
 
 
     }

@@ -23,10 +23,11 @@
                     <div class="ibox-content">
 
                         <!-- form -->
-                        {{--<a href="/orthodensy/create/{{$patient->id}}" class="btn btn-primary"--}}
-                        {{--style="">{{trans('file.back')}}</a>--}}
+                        <a href="/orthodensy/create/{{$treatment_id->patient->id}}" class="btn btn-primary"
+                        style="">{{trans('file.back')}}</a>
                         <br>
                         <br>
+
                         <div class="row">
                             <div class="col-lg-5">
                                 <form id="form" method="post" action="/orthodensy" enctype="multipart/form-data">
