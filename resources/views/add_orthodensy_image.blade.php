@@ -39,7 +39,7 @@
                                         <label>Description</label>
                                         <div>
                                             <textarea name="description" id="" cols="30" style="resize: none"
-                                                      placeholder="Description" class="form-control"></textarea>
+                                                      placeholder="Description" class="form-control" required></textarea>
 
                                         </div>
                                         <div class="form-group">

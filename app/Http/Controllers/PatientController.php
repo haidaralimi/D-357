@@ -44,6 +44,30 @@ class PatientController extends Controller
             return view('patient.search_patient_from_general_treatment', compact('data'));
 
         }
+
+    public function search_patient_from_list_of_patient(Request $request)
+    {
+        if (isset($request->date)){
+            $query = $request->date;
+            $data = DB::table('patients')->where('id_patient', 'like', '%' . $query . '%')
+                ->orWhere('name', 'like', '%' . $query . '%')
+                ->orWhere('lastname', 'like', '%' . $query . '%')
+                ->orWhere('phone', 'like', '%' . $query . '%')
+                ->orWhere('next_appointment', 'like', '%' . $query . '%')->get();
+            return view('patient.patient_report_search', compact('data'));
+
+        }
+        else {
+
+            $query = $request->search;
+            $data = DB::table('patients')->where('id_patient', 'like', '%' . $query . '%')
+                ->orWhere('name', 'like', '%' . $query . '%')
+                ->orWhere('lastname', 'like', '%' . $query . '%')
+                ->orWhere('phone', 'like', '%' . $query . '%')->get();
+//            return $data;
+            return view('patient.patient_report_search', compact('data'));
+        }
+    }
         public function search_prosthesis_patient(Request $request){
             $query = $request->search_patient;
             $data = DB::table('patients')->where('id_patient','like','%'.$query.'%')
@@ -95,6 +119,7 @@ class PatientController extends Controller
             $patient->age = $request->age;
             $patient->phone = $request->phone;
             $patient->address = $request->address;
+            $patient->deposit = $request->deposit;
 
             $checkbox = $request->input('problem_health');
             $string = '';
@@ -244,10 +269,21 @@ class PatientController extends Controller
     }
 
 
+    public function updateAppointmentFromSearch($id,Request $request){
+        $patient = Patient::find($id);
+        $patient->next_appointment = $request->next_appointment_date;
+        $patient->time = $request->time;
+        $patient->meridiem = $request->meridiem;
+        $patient->update();
+        return redirect('patient');
+
+    }
 
     public function updateAppointment($id, Request $request){
         $patient = Patient::find($id);
-        $patient->next_appointment = $request->next_appointment;
+
+
+        $patient->next_appointment = $request->next_appointment_date;
         $patient->time = $request->time;
         $patient->meridiem = $request->meridiem;
         $patient->update();

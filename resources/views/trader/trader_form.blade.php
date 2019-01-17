@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>{{trans('file.pp')}}</label>
-                                        <div><select type="text" name="payment_process" class="form-control" required>
+                                        <div><select name="payment_process" class="form-control" required>
                                                 <option value="{{trans('file.pp')}}" disabled selected>{{trans('file.pp')}}</option>
                                                 <option value="{{trans('file.cash')}}">{{trans('file.cash')}}</option>
                                                 <option value="{{trans('file.weekly')}}">{{trans('file.weekly')}}</option>

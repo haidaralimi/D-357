@@ -129,8 +129,9 @@ Route::middleware('auth','reception')->group(function () {
     Route::post('/patient/storeFromDash','PatientController@storeFromDash');
     Route::get('/new-patient-today','PatientController@show_new_patients');
     Route::get('/next-appointment-patient','PatientController@show_next_appointment_patient');
-    Route::patch('next-appointment-patient-edit/{id}','PatientController@updateNextappointmentPatient');
-    Route::patch('next-appointment-patient-edit-appointment/{id}','PatientController@updateAppointment');
+    Route::patch('/next-appointment-patient-edit/{id}','PatientController@updateNextappointmentPatient');
+    Route::patch('/next-appointment-patient-edit-appointment/{id}','PatientController@updateAppointment');
+    Route::patch('/updateAppointmentFromSearch/{id}','PatientController@updateAppointmentFromSearch');
     Route::get('/miss-next-appointment-patient','PatientController@show_missing_next_appointment_patient');
     Route::resource('/expense-category','ExpenseCatagoryController');
     Route::get('/dash', 'HomeController@index')->name('home');
@@ -310,7 +311,7 @@ Route::middleware('auth','reception')->group(function () {
     Route::resource('/teeth-shade','TeethShadeController');
     //    Teeth cover Route
     Route::resource('/teeth-cover','TeethCoverTypeController');
-    Route::post('/patient_report/search','patientReportController@search_patient');
+    Route::post('/patient/search','PatientController@search_patient_from_list_of_patient');
     Route::resource('/medicine','MedicineController');
     //route for delet medicine
     Route::get('medicine2/{id}','MedicineController@delete');

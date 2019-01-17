@@ -88,7 +88,7 @@
 
     @foreach($data as $patient)
         {{--modal window to show editing detail of doctor--}}
-        <div class="modal inmodal" id="e{{$patient ->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal inmodal" id="e{{$patient->id}}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content animated fadeIn">
                     <div class="modal-header">
@@ -97,12 +97,13 @@
                                     aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h4 class="modal-title"><i class="fa fa-history"></i>&nbsp;&nbsp;{{trans('file.change_appointment')}}</h4>
                     </div>
-                    <form id="form" action="/next-appointment-patient-edit/{{$patient->id}}" method="post">
+                    <form  action="/updateAppointmentFromSearch/{{$patient->id}}" method="post">
                         {{method_field('patch')}}
                         <div class="modal-body">
 
                             <div class="form-group"><label>{{trans('file.change_appointment')}}</label>
-                                <input type="date" name="next_appointment_date" placeholder="{{trans('file.next_appointment_date')}}"
+                                <input type="date" name="next_appointment_date"
+                                       placeholder="{{trans('file.next_appointment_date')}}"
                                        value="{{$patient->next_appointment}}" class="form-control"></div>
 
                             <div class="form-group"><label>Time</label>
@@ -112,30 +113,42 @@
                             <div class="form-group"><label>Meridien</label>
                                 @if($patient->meridiem == "AM")
                                     <ul class="list-meridiem">
-                                        <li><div class="i-checks"><label>AM
+                                        <li>
+                                            <div class="i-checks"><label>AM
                                                     <input type="radio" name="meridiem" checked
-                                                           value="AM" class="form-control"></label></div></li>
-                                        <li><div class="i-checks"><label>
+                                                           value="AM" class="form-control"></label></div>
+                                        </li>
+                                        <li>
+                                            <div class="i-checks"><label>
                                                     PM <input type="radio" name="meridiem"
-                                                              value="PM" class="form-control"></label></div></li>
+                                                              value="PM" class="form-control"></label></div>
+                                        </li>
                                     </ul>
                                 @elseif($patient->meridiem == "PM")
                                     <ul class="list-meridiem">
-                                        <li><div class="i-checks"><label>AM
+                                        <li>
+                                            <div class="i-checks"><label>AM
                                                     <input type="radio" name="meridiem"
-                                                           value="AM" class="form-control"></label></div></li>
-                                        <li><div class="i-checks"><label>
+                                                           value="AM" class="form-control"></label></div>
+                                        </li>
+                                        <li>
+                                            <div class="i-checks"><label>
                                                     PM <input type="radio" name="meridiem" checked
-                                                              value="PM" class="form-control"></label></div></li>
+                                                              value="PM" class="form-control"></label></div>
+                                        </li>
                                     </ul>
                                 @else
                                     <ul class="list-meridiem">
-                                        <li><div class="i-checks"><label>AM
+                                        <li>
+                                            <div class="i-checks"><label>AM
                                                     <input type="radio" name="meridiem"
-                                                           value="AM" class="form-control"></label></div></li>
-                                        <li><div class="i-checks"><label>
+                                                           value="AM" class="form-control"></label></div>
+                                        </li>
+                                        <li>
+                                            <div class="i-checks"><label>
                                                     PM <input type="radio" name="meridiem"
-                                                              value="PM" class="form-control"></label></div></li>
+                                                              value="PM" class="form-control"></label></div>
+                                        </li>
                                     </ul>
                                 @endif
 
@@ -145,8 +158,9 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">{{trans('file.close')}}</button>
-                            <button type="submit"   class="btn btn-primary">{{trans('file.save')}}</button>
+                            <button type="button" class="btn btn-white"
+                                    data-dismiss="modal">{{trans('file.close')}}</button>
+                            <button type="submit" class="btn btn-primary">{{trans('file.save')}}</button>
 
                         </div>
                     </form>

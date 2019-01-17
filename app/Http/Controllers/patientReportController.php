@@ -87,7 +87,7 @@ class patientReportController extends Controller
                 ->orWhere('name', 'like', '%' . $query . '%')
                 ->orWhere('lastname', 'like', '%' . $query . '%')
                 ->orWhere('phone', 'like', '%' . $query . '%')
-                ->orWhere('next_appointment', 'li   ke', '%' . $query . '%')->get();
+                ->orWhere('next_appointment', 'like', '%' . $query . '%')->get();
               return view('patient.patient_report_search', compact('data'));
 
         }

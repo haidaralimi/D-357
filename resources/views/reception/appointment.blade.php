@@ -18,53 +18,74 @@
             float: left;
         }
 
+        .url-table a {
+            display: block;
+            text-decoration: none;
+        }
+
     </style>
 @endsection
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12">
-            <div class="col-md-2 col-xs-3 text-center" style="margin-top:5px;">
-                <a href="/patient/create">
-                    <button class="btn btn-primary">
-                        <img src="{{ asset('img/patient.png') }}" width="30px"
-                             class=""/>&nbsp;<br/> {{trans('file.add_new_patient')}}
-                    </button>
-                </a>
-            </div>
-            <div class="col-md-2 text-center col-xs-4" style="margin-top:5px;">
-                <a href="/new-patient-today">
-                    <button class="btn btn-info">
-                        <img src="{{ asset('img/list_new_patient.png') }}" width="50px"
-                             class=""/><br/>{{trans('file.list_new_patient_today')}}
-                    </button>
-                </a>
-            </div>
-            <div class="col-md-2 text-center col-xs-4" style="margin-top:5px;">
-                <a href="/next-appointment-patient">
-                    <button class="btn" style=" background-color: #62c694; color: #ffffff">
-                        <img src="{{ asset('img/list_appointment.png') }}" width="50px"
-                             class=""/><br/>{{trans('file.list_next_appointment_today')}}
-                    </button>
-                </a>
-            </div>
-            <div class="col-md-2 text-center col-xs-4" style="margin-top:5px;">
-                <a href="/miss-next-appointment-patient">
-                    <button class="btn" style=" background-color: #12cdba; color: #ffffff">
-                        <img src="{{ asset('img/miss_appointment.png') }}" width="50px"
-                             class=""/><br/>{{trans('file.miss_list_next_appointment')}}
-                    </button>
-                </a>
-            </div>
+        <div class="col-lg-12 col-sm-12 table-responsive">
+            <table class="table url-table">
+                <tr>
+                    <td>
+                    <div class="col-md-2 col-xs-3 text-center" style="margin-top:5px;">
 
-            <div class="col-md-2 text-center col-xs-3" style="margin-top:5px;">
-                <a href="/patient_report">
-                    <button class="btn" style=" background-color: #3989cd; color: #ffffff">
-                        <img src="{{ asset('img/patient_list.png') }}" width="50px"
-                        /><br/>{{trans('file.all_patient')}}
-                    </button>
-                </a>
-            </div>
+                            <a href="/patient/create">
+                                <button class="btn btn-primary">
+                                    <img src="{{ asset('img/patient.png') }}" width="30px"
+                                         class=""/>&nbsp;<br/> {{trans('file.add_new_patient')}}
+                                </button>
+                            </a>
+
+                    </div>
+                    </td>
+                    <td>
+                    <div class="col-md-2 text-center col-xs-4" style="margin-top:5px;">
+
+                        <a href="/new-patient-today">
+                            <button class="btn btn-info">
+                                <img src="{{ asset('img/list_new_patient.png') }}" width="50px"
+                                     class=""/><br/>{{trans('file.list_new_patient_today')}}
+                            </button>
+                        </a>
+                    </div>
+                    </td>
+                    <td>
+                    <div class="col-md-2 text-center col-xs-4" style="margin-top:5px;">
+                        <a href="/next-appointment-patient">
+                            <button class="btn" style=" background-color: #62c694; color: #ffffff">
+                                <img src="{{ asset('img/list_appointment.png') }}" width="50px"
+                                     class=""/><br/>{{trans('file.list_next_appointment_today')}}
+                            </button>
+                        </a>
+                    </div>
+                    </td>
+                    <td>
+                    <div class="col-md-2 text-center col-xs-4" style="margin-top:5px;">
+                        <a href="/miss-next-appointment-patient">
+                            <button class="btn" style=" background-color: #12cdba; color: #ffffff">
+                                <img src="{{ asset('img/miss_appointment.png') }}" width="50px"
+                                     class=""/><br/>{{trans('file.miss_list_next_appointment')}}
+                            </button>
+                        </a>
+                    </div>
+                    </td>
+                    <td>
+                    <div class="col-md-2 text-center col-xs-3" style="margin-top:5px;">
+                        <a href="/patient_report">
+                            <button class="btn" style=" background-color: #3989cd; color: #ffffff">
+                                <img src="{{ asset('img/patient_list.png') }}" width="50px"
+                                /><br/>{{trans('file.all_patient')}}
+                            </button>
+                        </a>
+                    </div>
+                    </td>
+                </tr>
+            </table>
         </div>
         <br/>
     </div>
@@ -93,7 +114,7 @@
                     <div class="col-md-12 pull-right col-xs-12">
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <form action="/patient_report/search" method="post">
+                                <form action="/patient/search" method="post">
                                 <div class="input-group col-md-12 col-xs-12">
                                         <span class="input-group-btn">
                                                 <button type="submit" class="btn btn-primary"><i
